@@ -1,0 +1,202 @@
+@use "sass:map";
+@use "../abstracts/index" as *;
+@use "../components/index" as *;
+
+@mixin label() {
+  @include font-preset-1($color: var(--grey-900), $text-transform: capitalize);
+
+  .mark {
+    color: var(--green-600);
+    margin-inline-start: map.get($spacing, 1);
+  }
+}
+
+@mixin formGroup($blockname) {
+  .#{$blockname} {
+    display: flex;
+    flex-direction: column;
+    row-gap: map.get($spacing, 4);
+    @content;
+
+    &__label {
+      @include label();
+    }
+
+    &__input {
+      @include input();
+    }
+
+    &__error {
+      @include font-preset-1($color: var(--red));
+    }
+  }
+}
+
+.contact {
+  background-color: var(--white);
+  padding: map.get($spacing, 8);
+  border-radius: map.get($radius, br-4);
+  display: flex;
+  flex-direction: column;
+  row-gap: map.get($spacing, 8);
+  inline-size: 100%;
+  margin-block: map.get($spacing, 10);
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: map.get($spacing, 4);
+
+    @include media-query-sm() {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: map.get($spacing, 4);
+    }
+  }
+}
+
+@include formGroup($blockname: "firstname") {
+  @include media-query-sm() {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+@include formGroup($blockname: "lastname") {
+  @include media-query-sm() {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+@include formGroup($blockname: "email") {
+  @include media-query-sm() {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+  }
+}
+
+.query {
+  display: flex;
+  flex-direction: column;
+  row-gap: map.get($spacing, 4);
+
+  @include media-query-sm() {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: map.get($spacing, 4);
+  }
+
+  &__title {
+    margin-block-end: map.get($spacing, 4);
+    @include label();
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    @include input() {
+      padding-inline-start: map.get($spacing, 12);
+    }
+
+    &--active {
+      outline: 1px solid var(--green-600);
+      background-color: var(--green-200);
+    }
+  }
+
+  &__error {
+    @include font-preset-1($color: var(--red));
+  }
+
+  &__input {
+    inline-size: 1rem;
+    block-size: 1rem;
+    border: 1px solid var(--grey-500);
+    border-radius: map.get($radius, br-full);
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    transform: translateY(100%);
+    margin-inline: map.get($spacing, 6);
+
+    &:checked {
+      border: 2px solid var(--green-600);
+
+      &::after {
+        content: "";
+        width: 70%;
+        height: 70%;
+        background: var(--green-600);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+@include formGroup($blockname: "message") {
+  grid-column: 1 / span 2;
+  grid-row: 4;
+}
+
+.term {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: map.get($spacing, 4);
+  column-gap: map.get($spacing, 4);
+  margin-block-start: map.get($spacing, 4);
+  align-items: center;
+  grid-column: 1 / span 2;
+  grid-row: 5;
+
+  &__input {
+    grid-column: 1;
+    grid-row: 1;
+    inline-size: 1rem;
+    block-size: 1rem;
+    border: 2px solid var(--grey-500);
+    border-radius: map.get($radius, br-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:checked {
+      background-color: var(--green-600);
+      border-color: var(--green-600);
+
+      &::after {
+        content: "✔";
+        font-size: 0.65rem;
+        color: var(--white);
+      }
+    }
+  }
+
+  &__label {
+    grid-column: 2;
+    grid-row: 1;
+    @include label();
+    text-transform: none;
+  }
+
+  &__error {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    @include font-preset-1($color: var(--red));
+  }
+}
+
+.button {
+  grid-column: 1 / span 2;
+  grid-row: 6;
+  @include button();
+}

@@ -1,0 +1,48 @@
+@use "sass:map";
+@use "../abstracts/index" as *;
+
+.toast {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: var(--grey-900);
+  padding: map.get($spacing, 6);
+  border-radius: map.get($radius, br-4);
+  top: 0px;
+  row-gap: map.get($spacing, 4);
+  transform: translateY(-120px);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: map.get($spacing, 3);
+
+    img {
+      block-size: px-to-rem(20px);
+      inline-size: px-to-rem(20px);
+    }
+
+    .title {
+      @include font-preset-2(
+        $color: var(--white),
+        $font-weight: 700,
+        $text-transform: capitalize
+      );
+    }
+  }
+
+  &__body {
+    .desc {
+      @include font-preset-1($color: var(--green-200));
+    }
+  }
+
+  &--show {
+    transform: translateY(20px);
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+  }
+}

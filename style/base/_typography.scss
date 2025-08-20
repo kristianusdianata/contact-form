@@ -1,0 +1,15 @@
+@use "sass:map";
+@use "../abstracts/index" as *;
+
+html {
+  font-size: px-to-percent();
+}
+
+h1 {
+  @include line-clamp(1);
+  @include font-heading-1(
+    $color: var(--grey-900),
+    $font-weight: 700,
+    $text-transform: capitalize
+  );
+}

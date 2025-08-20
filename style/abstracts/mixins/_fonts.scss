@@ -1,0 +1,91 @@
+@use "sass:map";
+@use "./breakpoints" as *;
+
+$fontSize: (
+  fs-1: 0.79rem,
+  fs-2: 0.889rem,
+  fs-3: 1rem,
+  fs-4: 1.125rem,
+  fs-5: 1.266rem,
+  fs-6: 1.424rem,
+  fs-7: 1.602rem,
+  fs-8: 1.802rem,
+  fs-9: 2.027rem,
+);
+
+@function font-color($color) {
+  @if ($color != "") {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@mixin font-style(
+  $color,
+  $font-size,
+  $letter-spacing,
+  $line-height,
+  $font-weight,
+  $text-transform
+) {
+  font-size: $font-size;
+  letter-spacing: $letter-spacing;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  text-transform: $text-transform;
+  @if (font-color($color)) {
+    color: $color;
+  }
+}
+
+@mixin font-heading-1(
+  $color: "",
+  $letter-spacing: 0,
+  $line-height: inherit,
+  $font-weight: 400,
+  $text-transform: none
+) {
+  @include font-style(
+    $color: $color,
+    $font-size: map.get($fontSize, fs-8),
+    $letter-spacing: $letter-spacing,
+    $line-height: $line-height,
+    $font-weight: $font-weight,
+    $text-transform: $text-transform
+  );
+}
+
+@mixin font-preset-1(
+  $color: "",
+  $letter-spacing: 0,
+  $line-height: inherit,
+  $font-weight: 400,
+  $text-transform: none
+) {
+  @include font-style(
+    $color: $color,
+    $font-size: map.get($fontSize, fs-3),
+    $letter-spacing: $letter-spacing,
+    $line-height: $line-height,
+    $font-weight: $font-weight,
+    $text-transform: $text-transform
+  );
+}
+
+@mixin font-preset-2(
+  $color: "",
+  $letter-spacing: 0,
+  $line-height: inherit,
+  $font-weight: 400,
+  $text-transform: none
+) {
+  @include font-style(
+    $color: $color,
+    $font-size: map.get($fontSize, fs-4),
+    $letter-spacing: $letter-spacing,
+    $line-height: $line-height,
+    $font-weight: $font-weight,
+    $text-transform: $text-transform
+  );
+}

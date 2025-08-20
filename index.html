@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Contact form</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./style/style.css" />
+
+    <!-- Script -->
+    <!-- <script src="./script/index.js" type="module"></script> -->
+    <script src="./dist/index.js" type="module"></script>
+  </head>
+  <body>
+    <main class="container">
+      <article class="contact">
+        <h1 class="contact__title">contact us</h1>
+        <form class="contact__form">
+          <div class="firstname">
+            <label for="firstname" class="firstname__label">
+              First Name
+              <span class="mark">*</span>
+            </label>
+            <input
+              type="text"
+              name="firstname"
+              id="firstname"
+              aria-describedby="firstname-error"
+              autocomplete="name"
+              class="firstname__input"
+            />
+            <span
+              id="firstname-error"
+              role="alert"
+              class="firstname__error"
+            ></span>
+          </div>
+
+          <div class="lastname">
+            <label for="lastname" class="lastname__label">
+              Last Name
+              <span class="mark">*</span>
+            </label>
+            <input
+              type="text"
+              name="lastname"
+              id="lastname"
+              aria-describedby="lastname-error"
+              autocomplete="family-name"
+              class="lastname__input"
+            />
+            <span
+              id="lastname-error"
+              role="alert"
+              class="lastname__error"
+            ></span>
+          </div>
+
+          <div class="email">
+            <label for="email" class="email__label">
+              Email Address
+              <span class="mark">*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              aria-describedby="email-error"
+              autocomplete="email"
+              class="email__input"
+            />
+            <span id="email-error" role="alert" class="email__error"></span>
+          </div>
+
+          <fieldset class="query" aria-describedby="query-error">
+            <legend class="query__title">
+              Query Type
+              <span class="mark">*</span>
+            </legend>
+
+            <input
+              type="text"
+              aria-hidden="true"
+              hidden
+              name="query"
+              value=""
+            />
+
+            <div class="query__item">
+              <input
+                type="radio"
+                name="query"
+                id="general-enquiry"
+                value="General Enquiry"
+                class="query__input"
+              />
+              <label for="general-enquiry" class="query__label"
+                >General Enquiry</label
+              >
+            </div>
+
+            <div class="query__item">
+              <input
+                type="radio"
+                name="query"
+                id="support-request"
+                value="Support Request"
+                class="query__input"
+              />
+              <label for="support-request" class="query__label"
+                >Support Request</label
+              >
+            </div>
+
+            <span id="query-error" role="alert" class="query__error"></span>
+          </fieldset>
+
+          <div class="message">
+            <label for="message" class="message__label">
+              Message
+              <span class="mark">*</span>
+            </label>
+            <textarea
+              name="message"
+              id="message"
+              rows="10"
+              aria-describedby="message-error"
+              class="message__input"
+            ></textarea>
+            <span id="message-error" role="alert" class="message__error"></span>
+          </div>
+
+          <div class="term">
+            <input type="text" aria-hidden="true" hidden name="term" value="" />
+            <input
+              type="checkbox"
+              name="term"
+              id="term"
+              aria-describedby="term-error"
+              class="term__input"
+              value="true"
+            />
+            <label for="term" class="term__label">
+              I hereby consent to being contacted by the team
+              <span class="mark">*</span>
+            </label>
+            <span id="term-error" role="alert" class="term__error"></span>
+          </div>
+
+          <button type="submit" class="button">submit</button>
+        </form>
+      </article>
+
+      <div class="toast" role="status" aria-hidden="true">
+        <div class="toast__header">
+          <img
+            src="./assets/images/icon-success-check.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <p class="title">message sent!</p>
+        </div>
+        <div class="toast__body">
+          <p class="desc">
+            Thanks for completing the form. We&apos;ll be in touch soon!
+          </p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

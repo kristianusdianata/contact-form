@@ -1,0 +1,24 @@
+@use "sass:map";
+@use "../abstracts/index" as *;
+
+@mixin input() {
+  border: 1px solid var(--grey-500);
+  border-radius: map.get($radius, br-3);
+  padding-inline: map.get($spacing, 4);
+  padding-block: map.get($spacing, 3);
+  inline-size: 100%;
+  @content;
+  @include font-preset-2($color: var(--grey-900));
+
+  &:focus {
+    outline: 1px solid var(--green-600);
+  }
+
+  &--error {
+    border: 1px solid var(--red);
+
+    &:focus {
+      outline: 1px solid var(--red);
+    }
+  }
+}

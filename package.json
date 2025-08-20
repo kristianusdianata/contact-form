@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "clean": "if exist dist rmdir /s /q dist",
+    "build": "npm run clean && npx tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build-css": "sass --watch ./style/main.scss ./style/style.css"
+  },
+  "dependencies": {
+    "sass": "^1.90.0",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.9.2"
+  }
+}

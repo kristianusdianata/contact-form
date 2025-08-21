@@ -108,7 +108,7 @@ function submitForm() {
             let onErrorCb = null;
             let onSuccessCb = null;
             if (key === "query") {
-                const controller = radioController({ blockName: "query" });
+                const controller = radioController({ blockName: key });
                 onErrorCb = ({ errMsg }) => {
                     controller.errorUI({
                         errMsg,
@@ -172,10 +172,24 @@ function submitForm() {
             target.reset();
             // reset UI
             for (const [key, _value] of Object.entries(formObj)) {
-                const controller = radioController({
-                    blockName: key,
-                });
-                controller.defaultUI();
+                if (key === "query") {
+                    const controller = radioController({
+                        blockName: key,
+                    });
+                    controller.defaultUI();
+                }
+                else if (key === "term") {
+                    const controller = checkboxController({
+                        blockName: key,
+                    });
+                    controller.defaultUI();
+                }
+                else {
+                    const controller = inputController({
+                        blockName: key,
+                    });
+                    controller.defaultUI();
+                }
             }
             // show toast
             const controller = toastController();

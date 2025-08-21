@@ -141,7 +141,7 @@ function submitForm() {
       let onSuccessCb: ValidationParams["onSuccessCb"] | null = null;
 
       if (key === "query") {
-        const controller = radioController({ blockName: "query" });
+        const controller = radioController({ blockName: key });
 
         onErrorCb = ({ errMsg }) => {
           controller.errorUI({
@@ -212,11 +212,25 @@ function submitForm() {
 
       // reset UI
       for (const [key, _value] of Object.entries(formObj)) {
-        const controller = radioController({
-          blockName: key as BlockNamesType,
-        });
+        if (key === "query") {
+          const controller = radioController({
+            blockName: key as BlockNamesType,
+          });
 
-        controller.defaultUI();
+          controller.defaultUI();
+        } else if (key === "term") {
+          const controller = checkboxController({
+            blockName: key as BlockNamesType,
+          });
+
+          controller.defaultUI();
+        } else {
+          const controller = inputController({
+            blockName: key as BlockNamesType,
+          });
+
+          controller.defaultUI();
+        }
       }
 
       // show toast

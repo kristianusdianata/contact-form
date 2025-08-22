@@ -4,7 +4,15 @@ import { useElement } from "@libs/useElement.js";
 import type { BlockNamesType } from "@/core.js";
 
 function UI({ blockName }: { blockName: BlockNamesType }) {
-  function error({ errMsg, isFocus }: { errMsg: string; isFocus: boolean }) {
+  function error({
+    isError = false,
+    errMsg = "",
+    isFocus = false,
+  }: {
+    isError?: boolean;
+    errMsg?: string;
+    isFocus?: boolean;
+  }) {
     const element_ = element({ blockName });
     const input = useElement(
       element_.getChild<HTMLInputElement>({
@@ -17,9 +25,10 @@ function UI({ blockName }: { blockName: BlockNamesType }) {
       })
     );
 
+    input.toggleAttribute({ "aria-invalid": "true" }, isError);
     errorlabel.setInnerText(errMsg).done();
 
-    if (isFocus) {
+    if (isFocus && isError) {
       input.done().focus();
     }
   }
@@ -37,7 +46,8 @@ export function checkboxController({
   const UIHelper = UI({ blockName });
 
   return {
-    defaultUI: () => UIHelper.error({ errMsg: "", isFocus: false }),
+    defaultUI: () =>
+      UIHelper.error({ errMsg: "", isFocus: false, isError: false }),
     errorUI: UIHelper.error,
   };
 }

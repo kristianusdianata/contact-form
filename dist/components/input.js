@@ -1,7 +1,7 @@
 import { element } from "../utils/element.js";
 import { useElement } from "../libs/useElement.js";
 function UI({ blockName }) {
-    function error({ isError, errMsg, isFocus, }) {
+    function error({ isError = false, errMsg = "", isFocus = false, }) {
         const element_ = element({ blockName });
         const input = useElement(element_.getChild({
             elementName: "input",
@@ -9,10 +9,15 @@ function UI({ blockName }) {
         const errorlabel = useElement(element_.getChild({
             elementName: "error",
         }));
-        input.toggleClass(`${blockName}__input--error`, isError).done();
+        input
+            .toggleAttribute({ "aria-invalid": "true" }, isError)
+            .toggleClass(`${blockName}__input--error`, isError);
         errorlabel.setInnerText(errMsg).done();
-        if (isFocus) {
+        if (isFocus && isError) {
             input.done().focus();
+        }
+        else {
+            input.done();
         }
     }
     return {
@@ -22,7 +27,7 @@ function UI({ blockName }) {
 export function inputController({ blockName }) {
     const UIHelper = UI({ blockName });
     return {
-        defaultUI: () => UIHelper.error({ isError: false, errMsg: "", isFocus: false }),
+        defaultUI: () => UIHelper.error({}),
         errorUI: UIHelper.error,
     };
 }

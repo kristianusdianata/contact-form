@@ -5,13 +5,13 @@ import type { BlockNamesType } from "@/core.js";
 
 function UI({ blockName }: { blockName: BlockNamesType }) {
   function error({
-    isError,
-    errMsg,
-    isFocus,
+    isError = false,
+    errMsg = "",
+    isFocus = false,
   }: {
-    isError: boolean;
-    errMsg: string;
-    isFocus: boolean;
+    isError?: boolean;
+    errMsg?: string;
+    isFocus?: boolean;
   }) {
     const element_ = element({ blockName });
     const input = useElement(
@@ -25,11 +25,16 @@ function UI({ blockName }: { blockName: BlockNamesType }) {
       })
     );
 
-    input.toggleClass(`${blockName}__input--error`, isError).done();
+    input
+      .toggleAttribute({ "aria-invalid": "true" }, isError)
+      .toggleClass(`${blockName}__input--error`, isError);
+
     errorlabel.setInnerText(errMsg).done();
 
-    if (isFocus) {
+    if (isFocus && isError) {
       input.done().focus();
+    } else {
+      input.done();
     }
   }
 
@@ -42,8 +47,7 @@ export function inputController({ blockName }: { blockName: BlockNamesType }) {
   const UIHelper = UI({ blockName });
 
   return {
-    defaultUI: () =>
-      UIHelper.error({ isError: false, errMsg: "", isFocus: false }),
+    defaultUI: () => UIHelper.error({}),
     errorUI: UIHelper.error,
   };
 }

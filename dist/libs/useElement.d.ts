@@ -5,6 +5,7 @@ export interface ElementAPI<T extends HTMLElement> {
     setInnerText: (text: string) => ElementAPI<T>;
     setAttribute: (attributes: Record<string, string>) => ElementAPI<T>;
     removeAttribute: (attrName: string) => ElementAPI<T>;
+    toggleAttribute: (attributes: Record<string, string>, condition: boolean) => ElementAPI<T>;
     setEventHandler: <K extends keyof HTMLElementEventMap>(event: K, handler: (ev: HTMLElementEventMap[K]) => void, options?: boolean | AddEventListenerOptions) => ElementAPI<T>;
     getAttribute: (attrName: string) => string;
     getDataAttribute: (attrName: string) => string;

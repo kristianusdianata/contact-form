@@ -31,11 +31,13 @@ function UI({ blockName }) {
         const radioLabel = useElement(getRadioRef(radio));
         radioLabel.toggleClass(`${blockName}__label--active`, isActive).done();
     }
-    function error({ errMsg, isFocus }) {
+    function error({ isError = false, errMsg = "", isFocus = false, }) {
         const element_ = element({ blockName });
+        const fieldset = useElement(element_.getParent());
         const errorLabel = useElement(element_.getChild({ elementName: `error` }));
+        fieldset.toggleAttribute({ "aria-invalid": "true" }, isError);
         errorLabel.setInnerText(errMsg).done();
-        if (isFocus) {
+        if (isFocus && isError) {
             const radios = element_.selectorAll({
                 query: `.${blockName}__input`,
             });
@@ -47,7 +49,7 @@ function UI({ blockName }) {
         error,
     };
 }
-export function radioController({ blockName }) {
+export function radioGroupController({ blockName, }) {
     const element_ = element({ blockName });
     const errorField = element_.getChild({
         elementName: "error",
@@ -62,7 +64,7 @@ export function radioController({ blockName }) {
         stateHelper.defaultState();
         for (const radio of Array.from(radios)) {
             UIHelper.toggleActive({ radio, isActive: false });
-            UIHelper.error({ errMsg: "", isFocus: false });
+            UIHelper.error({ errMsg: "", isFocus: false, isError: false });
         }
     }
     /**
@@ -89,4 +91,4 @@ export function radioController({ blockName }) {
         errorUI: UIHelper.error,
     };
 }
-//# sourceMappingURL=radio.js.map
+//# sourceMappingURL=radioGroup.js.map

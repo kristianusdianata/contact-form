@@ -47,15 +47,27 @@ function UI({ blockName }: { blockName: BlockNamesType }) {
     radioLabel.toggleClass(`${blockName}__label--active`, isActive).done();
   }
 
-  function error({ errMsg, isFocus }: { errMsg: string; isFocus: boolean }) {
+  function error({
+    isError = false,
+    errMsg = "",
+    isFocus = false,
+  }: {
+    isError?: boolean;
+    errMsg?: string;
+    isFocus?: boolean;
+  }) {
     const element_ = element({ blockName });
+
+    const fieldset = useElement(element_.getParent());
 
     const errorLabel = useElement(
       element_.getChild<HTMLSpanElement>({ elementName: `error` })
     );
+
+    fieldset.toggleAttribute({ "aria-invalid": "true" }, isError);
     errorLabel.setInnerText(errMsg).done();
 
-    if (isFocus) {
+    if (isFocus && isError) {
       const radios = element_.selectorAll<HTMLInputElement>({
         query: `.${blockName}__input`,
       });
@@ -69,7 +81,11 @@ function UI({ blockName }: { blockName: BlockNamesType }) {
   };
 }
 
-export function radioController({ blockName }: { blockName: BlockNamesType }) {
+export function radioGroupController({
+  blockName,
+}: {
+  blockName: BlockNamesType;
+}) {
   const element_ = element({ blockName });
   const errorField = element_.getChild<HTMLSpanElement>({
     elementName: "error",
@@ -86,7 +102,7 @@ export function radioController({ blockName }: { blockName: BlockNamesType }) {
     stateHelper.defaultState();
     for (const radio of Array.from(radios)) {
       UIHelper.toggleActive({ radio, isActive: false });
-      UIHelper.error({ errMsg: "", isFocus: false });
+      UIHelper.error({ errMsg: "", isFocus: false, isError: false });
     }
   }
 

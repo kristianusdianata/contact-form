@@ -5,6 +5,10 @@ export interface ElementAPI<T extends HTMLElement> {
   setInnerText: (text: string) => ElementAPI<T>;
   setAttribute: (attributes: Record<string, string>) => ElementAPI<T>;
   removeAttribute: (attrName: string) => ElementAPI<T>;
+  toggleAttribute: (
+    attributes: Record<string, string>,
+    condition: boolean
+  ) => ElementAPI<T>;
   setEventHandler: <K extends keyof HTMLElementEventMap>(
     event: K,
     handler: (ev: HTMLElementEventMap[K]) => void,
@@ -80,6 +84,15 @@ export function useElement<T extends HTMLElement>(arg: T): ElementAPI<T> {
 
     removeAttribute(attrName) {
       element.removeAttribute(attrName);
+      return api;
+    },
+
+    toggleAttribute(attributes, condition) {
+      for (const [key, value] of Object.entries(attributes)) {
+        if (condition) element.setAttribute(key.toString(), value);
+        else element.removeAttribute(key.toString());
+      }
+
       return api;
     },
 

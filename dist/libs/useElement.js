@@ -58,6 +58,15 @@ export function useElement(arg) {
             element.removeAttribute(attrName);
             return api;
         },
+        toggleAttribute(attributes, condition) {
+            for (const [key, value] of Object.entries(attributes)) {
+                if (condition)
+                    element.setAttribute(key.toString(), value);
+                else
+                    element.removeAttribute(key.toString());
+            }
+            return api;
+        },
         setEventHandler(event, handler, options) {
             element.addEventListener(event, handler, options);
             return api;

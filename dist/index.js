@@ -1,4 +1,4 @@
-import { inputController, checkboxController, radioController, toastController, } from "./components/index.js";
+import { inputController, checkboxController, radioGroupController, toastController, } from "./components/index.js";
 import { blockNames } from "./core.js";
 import { element } from "./utils/index.js";
 import { useElement } from "./libs/useElement.js";
@@ -21,7 +21,7 @@ function init() {
             const radios = element_.selectorAll({
                 query: "input[type=radio]",
             });
-            const controller = radioController({ blockName: blockName });
+            const controller = radioGroupController({ blockName: blockName });
             useElement(fieldset).setEventHandler("focusout", (event) => {
                 if (!fieldset.contains(event.relatedTarget)) {
                     const checked = Array.from(radios).find((radio) => radio.checked);
@@ -31,15 +31,13 @@ function init() {
                         input: targetValue,
                         onErrorCb({ errMsg }) {
                             controller.errorUI({
+                                isError: true,
                                 errMsg,
                                 isFocus: false,
                             });
                         },
                         onSuccessCb() {
-                            controller.errorUI({
-                                errMsg: "",
-                                isFocus: false,
-                            });
+                            controller.errorUI({});
                         },
                     });
                 }
@@ -47,10 +45,7 @@ function init() {
             for (const radio of radios) {
                 useElement(radio).setEventHandler("change", (event) => {
                     controller.toggleActiveHandler(event);
-                    controller.errorUI({
-                        errMsg: "",
-                        isFocus: false,
-                    });
+                    controller.errorUI({});
                 });
             }
         }
@@ -108,18 +103,16 @@ function submitForm() {
             let onErrorCb = null;
             let onSuccessCb = null;
             if (key === "query") {
-                const controller = radioController({ blockName: key });
+                const controller = radioGroupController({ blockName: key });
                 onErrorCb = ({ errMsg }) => {
                     controller.errorUI({
+                        isError: true,
                         errMsg,
                         isFocus: firstErrorField === "query" ? true : false,
                     });
                 };
                 onSuccessCb = () => {
-                    controller.errorUI({
-                        errMsg: "",
-                        isFocus: false,
-                    });
+                    controller.errorUI({});
                 };
             }
             else if (key === "term") {
@@ -128,15 +121,13 @@ function submitForm() {
                 });
                 onErrorCb = ({ errMsg }) => {
                     controller.errorUI({
+                        isError: true,
                         errMsg,
                         isFocus: firstErrorField === "term" ? true : false,
                     });
                 };
                 onSuccessCb = () => {
-                    controller.errorUI({
-                        errMsg: "",
-                        isFocus: false,
-                    });
+                    controller.errorUI({});
                 };
             }
             else {
@@ -151,11 +142,7 @@ function submitForm() {
                     });
                 };
                 onSuccessCb = () => {
-                    controller.errorUI({
-                        isError: false,
-                        errMsg: "",
-                        isFocus: false,
-                    });
+                    controller.errorUI({});
                 };
             }
             // do validation
@@ -173,7 +160,7 @@ function submitForm() {
             // reset UI
             for (const [key, _value] of Object.entries(formObj)) {
                 if (key === "query") {
-                    const controller = radioController({
+                    const controller = radioGroupController({
                         blockName: key,
                     });
                     controller.defaultUI();

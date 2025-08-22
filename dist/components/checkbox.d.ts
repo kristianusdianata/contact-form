@@ -3,9 +3,10 @@ export declare function checkboxController({ blockName, }: {
     blockName: BlockNamesType;
 }): {
     defaultUI: () => void;
-    errorUI: ({ errMsg, isFocus }: {
-        errMsg: string;
-        isFocus: boolean;
+    errorUI: ({ isError, errMsg, isFocus, }: {
+        isError?: boolean;
+        errMsg?: string;
+        isFocus?: boolean;
     }) => void;
 };
 //# sourceMappingURL=checkbox.d.ts.map
